@@ -19,6 +19,13 @@
       </div>
       <div>
         <p>Implement this page yourself. It is from subs.ejs</p>
+        <p>Subreddits</p>
+        <div class="subs">
+          <% subs.forEach(sub => { %>
+          <a href="/subs/show/<%= sub %>>"><%= sub %></a>
+        </div>
+          <% }) %>
+
       </div>
     </main>
   </body>
