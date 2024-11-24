@@ -33,25 +33,17 @@ router.get("/edit/:postid", ensureAuthenticated, async (req, res) => {
   const postId = Number(req.params.postid);
   const post = await getPost(postId);
   
-  // Check if the post exists
-  if (!post) {
-    return res.status(404).render('error', { message: 'Post not found' });
-  }
-  // Check if the logged-in user is the creator of the post
-  if (post.creator !== getUser(postId)) {
-    return res.status(403).render('error', { message: 'Unauthorized to edit this post' });
-  }
   //Render the edit form with the current post data
-
   res.render("editPost", {post});
 });
 
 router.post("/edit/:postid", ensureAuthenticated, async (req, res) => {
-  // ⭐ TODO
+  // ⭐ TODO 
   const postId = Number(req.params.postid);
   const { title, description } = req.body;
   const postToEdit = await editPost(postId, {title, description});
-  res.redirect(`/edit/${postToEdit}`);
+
+  res.redirect(`/posts/show/${postToEdit}`);
 });
 
 router.get("/deleteconfirm/:postid", ensureAuthenticated, async (req, res) => {
@@ -105,4 +97,12 @@ router.post(
   }
 );
 
+router.post(
+  "/vote/:postid",
+  ensureAuthenticated, 
+  async (req, res) => {
+    const postId = Number(req.params.postid);
+    res.redirect(`/posts/show/${postId}`);
+  }
+)
 export default router;
