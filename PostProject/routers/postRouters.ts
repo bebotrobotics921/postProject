@@ -1,7 +1,7 @@
 import express from "express";
 const router = express.Router();
 import { ensureAuthenticated } from "../middleware/checkAuth";
-import { getUser, getPosts, getPost, addPost, editPost, deletePost, addComment } from "../fake-db";
+import { getPosts, getPost, addPost, editPost, deletePost, addComment } from "../fake-db";
 
 router.get("/", async (req, res) => {
   const posts = await getPosts(20);
@@ -96,13 +96,23 @@ router.post(
 
   }
 );
-
+/** 
 router.post(
   "/vote/:postid",
   ensureAuthenticated, 
   async (req, res) => {
     const postId = Number(req.params.postid);
+    const { setvoteto } = req.body;
+    if (![1, -1, 0].includes(parseInt(setvoteto))) {
+      return res.status(400).send("Invalid vote value.");
+    }
+    const post = await getPost(postId);
+    if(!post) {
+      return res.status(404).send("Post not found");
+    }
+    await getVotesForPost(postId);
+    
     res.redirect(`/posts/show/${postId}`);
   }
-)
+)*/
 export default router;
