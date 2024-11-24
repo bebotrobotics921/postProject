@@ -19,6 +19,21 @@
       </div>
       <div>
         <p>Implement this page yourself. It is from sub.ejs</p>
+        <div>
+          <h1>Posts in <%= subname %></h1>
+          <% if (filterposts.length === 0) { %>
+            <p>No posts available in this subreddit.</p>
+          <% }else { %>
+            <ul>
+              <% filterposts.forEach(post => { %>
+                <li>
+                  <h3><%= post.title %></h3>
+                  <p><%= post.subgroup %></p>
+                </li>
+              <% }); %>
+            </ul>
+          <% } %>
+       
       </div>
     </main>
   </body>
