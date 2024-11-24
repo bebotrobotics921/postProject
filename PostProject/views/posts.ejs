@@ -25,13 +25,19 @@
       <div>
         <p>All Posts</p>
         <% posts.forEach(post => { %>
+          <form action="/vote/:postid" method="post"></form>
         <div class="individualPost">
           <a href="/posts/show/<%=post.id%>"><%= post.title %></a>
           <p><%= post.description %></p>
+          <button name="setvoteto" value="1">+</button>
+        <button name="setvoteto" value="-1">-</button>
         </div>
         <% }) %>
       </div>
-
+      
+        
+        
+      </form>
       <div>
         <a href="/subs/list">Subgroups</a>
       </div>
