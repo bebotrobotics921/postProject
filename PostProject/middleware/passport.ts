@@ -11,7 +11,7 @@ const localLogin = new LocalStrategy(
     usernameField: "uname",
     passwordField: "password",
   },
-  async (uname: string, password: string, done: any)=> {
+  async (uname: string, password: string, done: (any))=> {
     // Check if user exists in databse
     const user = await getUserByEmailIdAndPassword(uname, password);
     return user
@@ -23,12 +23,12 @@ const localLogin = new LocalStrategy(
 );
 
 // ⭐ TODO: Passport Types
-passport.serializeUser(function (user: Express.User, done: (err: any, id?: number) => void) {
+passport.serializeUser(function (user: Express.User, done: (err: Error | null, id?: number) => void) {
   done(null, user.id);
 });
 
 // ⭐ TODO: Passport Types
-passport.deserializeUser(function (id: number, done: (err: any, user?: any | false) => any) {
+passport.deserializeUser(function (id: number, done: (err: {message: string} | null, user?: any | null) => void) {
   const user = getUserById(id);
   if (user) {
     done(null, user);
